@@ -2,7 +2,7 @@
 
 **A fact-checker for financial filings that won't make up a number.**
 
-Ask a question about a filing you give it (a 10-K, 10-Q, earnings transcript, or prospectus). FilingProof answers **only** from that document, quotes the exact line, and says **"Not stated in this filing"** instead of guessing. Every figure it reports is verified verbatim against the source before you ever see it — and if the AI slips, the guard catches it.
+Ask a question about a filing you give it (a 10-K, 10-Q, earnings transcript, or prospectus). FilingProof answers **only** from that document, quotes the exact line, and says **"Not stated in this filing"** instead of guessing. Every figure it reports is verified verbatim against the source before you ever see it and if the AI slips, the guard catches it.
 
 It's The I Don't Know Project, pointed at finance. Built on the [VeriTrace](https://github.com/waelalebrahim/wa-VeriTrace-project) engine. Free and open source.
 
@@ -10,7 +10,7 @@ It's The I Don't Know Project, pointed at finance. Built on the [VeriTrace](http
 
 > **It will not make up a number.**
 
-The whole design exists to keep that single promise. In finance, a tool that fabricates one figure is finished — so FilingProof refuses rather than risk a wrong number.
+The whole design exists to keep that single promise. In finance, a tool that fabricates one figure is finished so FilingProof refuses rather than risk a wrong number.
 
 ## How it works
 
