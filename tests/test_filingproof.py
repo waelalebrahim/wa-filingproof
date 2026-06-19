@@ -59,6 +59,43 @@ def test_billions_phrasing_passes():
     assert guard("R&D expense was $29.9 billion.", SOURCE).ok
 
 
+# --- Number Guard: SIGN awareness (filings write a loss as "(1,234)") -------
+
+NEG_SOURCE = "Net income (loss) was (1,234) and operating income was 2,876."
+
+
+def test_sign_loss_is_caught():
+    # Source shows (1,234) -- a loss. Reporting it as a positive 1,234 is a
+    # different number and must be refused.
+    g = guard("Net income was 1,234.", NEG_SOURCE)
+    assert not g.ok
+    assert "1,234" in g.unverified or any("1,234" in u for u in g.unverified)
+
+
+def test_correct_negative_in_parens_passes():
+    assert guard("Net income (loss) was (1,234).", NEG_SOURCE).ok
+
+
+def test_correct_negative_with_minus_passes():
+    assert guard("Net income was -1,234.", NEG_SOURCE).ok
+
+
+def test_invented_loss_is_caught():
+    # Source shows a positive 2,876. Reporting it as a loss "(2,876)" is wrong.
+    g = guard("Operating loss was (2,876).", NEG_SOURCE)
+    assert not g.ok
+
+
+def test_positive_still_passes_alongside_negatives():
+    assert guard("Operating income was 2,876.", NEG_SOURCE).ok
+
+
+def test_currency_parenthesised_negative_sign_is_enforced():
+    src = "Foreign exchange impact was ($1.2 billion) for the period."
+    assert not guard("The impact was $1.2 billion.", src).ok
+    assert guard("The impact was ($1.2 billion).", src).ok
+
+
 # --- FilingChecker: end-to-end with a stand-in responder --------------------
 
 def test_checker_returns_grounded_answer():
